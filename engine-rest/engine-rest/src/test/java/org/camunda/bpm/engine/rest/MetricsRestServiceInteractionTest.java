@@ -28,11 +28,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.Date;
 import javax.ws.rs.core.Response.Status;
 
 import org.camunda.bpm.engine.AuthorizationException;
 import org.camunda.bpm.engine.ManagementService;
+import org.camunda.bpm.engine.impl.metrics.Meter;
 import org.camunda.bpm.engine.management.Metrics;
 import org.camunda.bpm.engine.management.MetricsQuery;
 import org.camunda.bpm.engine.rest.helper.MockProvider;
@@ -50,6 +52,7 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
   public static TestContainerRule rule = new TestContainerRule();
 
   public static final String METRICS_URL = TEST_RESOURCE_ROOT_PATH + MetricsRestService.PATH;
+  public static final String PROMETHEUS_URL = METRICS_URL + "/prometheus";
   public static final String DELETE_UTW_URL = METRICS_URL + "/task-worker";
   public static final String SINGLE_METER_URL = METRICS_URL + "/{name}";
   public static final String SUM_URL = SINGLE_METER_URL + "/sum";
@@ -421,6 +424,26 @@ public class MetricsRestServiceInteractionTest extends AbstractRestServiceTest {
       .body("message", equalTo(message))
     .when()
       .delete(DELETE_UTW_URL);
+  }
+
+  @Test
+  public void shouldReturnPrometheusCounter() {
+    Meter testMetric = new Meter("testMetric");
+    testMetric.markTimes(10);
+    when(managementServiceMock.getMetrics()).thenReturn(Collections.singletonMap("testMetric", testMetric));
+    given()
+    .then().expect()
+      .statusCode(Status.OK.getStatusCode())
+      .body(containsString("# HELP testMetric_total testMetric"))
+      .body(containsString("# TYPE testMetric_total counter"))
+      .body(containsString("testMetric_total 10.0"))
+      // hard-wired demonstration data in DefaultPrometheusMetricsCollector from here on
+      .body(containsString("# HELP instancesStarted_total Number of started instances per process definition"))
+      .body(containsString("# TYPE instancesStarted_total counter"))
+      .body(containsString("instancesStarted_total{processDefinitionKey=\"testProcessA\",} 55.0"))
+      .body(containsString("instancesStarted_total{processDefinitionKey=\"testProcessB\",} 22.0"))
+     .when()
+      .get(PROMETHEUS_URL);
   }
 
 }

@@ -30,14 +30,17 @@ public class ThreadPoolJobExecutor extends JobExecutor {
 
   protected ThreadPoolExecutor threadPoolExecutor;
 
+  @Override
   protected void startExecutingJobs() {
     startJobAcquisitionThread();
   }
 
+  @Override
   protected void stopExecutingJobs() {
     stopJobAcquisitionThread();
   }
 
+  @Override
   public void executeJobs(List<String> jobIds, ProcessEngineImpl processEngine) {
     try {
       threadPoolExecutor.execute(getExecuteJobsRunnable(jobIds, processEngine));
@@ -60,4 +63,12 @@ public class ThreadPoolJobExecutor extends JobExecutor {
     this.threadPoolExecutor = threadPoolExecutor;
   }
 
+  @Override
+  public JobExecutorThreadMetrics getThreadMetrics() {
+    JobExecutorThreadMetrics metrics = new JobExecutorThreadMetrics();
+    metrics.setThreadsActive(threadPoolExecutor.getActiveCount());
+    metrics.setThreadsActive(threadPoolExecutor.getPoolSize() - threadPoolExecutor.getActiveCount());
+    metrics.setQueueSize(threadPoolExecutor.getQueue().size());
+    return metrics;
+  }
 }

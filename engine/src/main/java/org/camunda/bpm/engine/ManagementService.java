@@ -35,6 +35,7 @@ import org.camunda.bpm.engine.batch.BatchQuery;
 import org.camunda.bpm.engine.batch.BatchStatisticsQuery;
 import org.camunda.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.camunda.bpm.engine.impl.jobexecutor.JobExecutor;
+import org.camunda.bpm.engine.impl.metrics.Meter;
 import org.camunda.bpm.engine.management.ActivityStatisticsQuery;
 import org.camunda.bpm.engine.management.DeploymentStatisticsQuery;
 import org.camunda.bpm.engine.management.JobDefinition;
@@ -1297,6 +1298,8 @@ public interface ManagementService {
    * @param timestamp or <code>null</code>
    */
   void deleteTaskMetrics(Date timestamp);
+
+  Map<String, Meter> getMetrics();
 
   /**
    * Creates a query to search for {@link org.camunda.bpm.engine.batch.Batch} instances.
