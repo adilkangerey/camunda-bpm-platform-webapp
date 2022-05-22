@@ -30,6 +30,9 @@ var apps = {
   admin: {
     label: 'Admin'
   },
+  catalog: {
+    label: 'Catalog'
+  },
   cockpit: {
     label: 'Cockpit'
   },

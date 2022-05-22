@@ -3,12 +3,14 @@
     "deniedPaths" : [
       { "path": "/api/engine/.*", "methods" : "*" },
       { "path": "/api/cockpit/.*", "methods" : "*" },
+      { "path": "/api/catalog/.*", "methods" : "*" },
       { "path": "/api/tasklist/.*", "methods" : "*" },
       { "path": "/api/admin/.*", "methods" : "*" },
       { "path": "/app/tasklist/{engine}/.*", "methods" : "*" },
       { "path": "/app/cockpit/{engine}/.*", "methods" : "*" },
       { "path": "/app/welcome/{engine}/.*", "methods" : "*" },
-      { "path": "/app/admin/{engine}/.*", "methods" : "*" }
+      { "path": "/app/admin/{engine}/.*", "methods" : "*" },
+      { "path": "/app/catalog/{engine}/.*", "methods" : "*" }
     ],
     "allowedPaths" : [
       { "path": "/api/engine/engine/", "methods" : "GET" },
@@ -31,7 +33,17 @@
       { "path": "/app/{app:cockpit}/{engine}/.*", "methods" : "*", "authorizer" : "org.camunda.bpm.webapp.impl.security.filter.ApplicationRequestAuthorizer" },
       { "path": "/app/{app:tasklist}/{engine}/.*", "methods" : "*", "authorizer" : "org.camunda.bpm.webapp.impl.security.filter.ApplicationRequestAuthorizer" },
       { "path": "/app/{app:welcome}/{engine}/.*", "methods" : "*", "authorizer" : "org.camunda.bpm.webapp.impl.security.filter.ApplicationRequestAuthorizer" },
-      { "path": "/app/{app:admin}/{engine}/.*", "methods" : "*", "authorizer" : "org.camunda.bpm.webapp.impl.security.filter.ApplicationRequestAuthorizer" }
+
+      { "path": "/app/{app:catalog}/{engine}/.*", "methods" : "*", "authorizer" : "org.camunda.bpm.webapp.impl.security.filter.ApplicationRequestAuthorizer" },
+      { "path": "/api/catalog/auth/user/{engine}", "methods" : "GET" },
+      { "path": "/api/catalog/auth/user/{engine}/logout", "methods" : "POST" },
+      { "path": "/api/catalog/auth/user/{engine}/login/{app}", "methods" : "POST" },
+      { "path": "/api/catalog/auth/user/{engine}/.*", "methods" : "*", "authorizer" : "org.camunda.bpm.webapp.impl.security.filter.EngineRequestAuthorizer" },
+      { "path": "/api/catalog/setup/{engine}/user/create", "methods" : "POST" },
+      { "path": "/api/catalog/setup/{engine}/.*", "methods" : "*", "authorizer" : "org.camunda.bpm.webapp.impl.security.filter.EngineRequestAuthorizer" },
+      { "path": "/api/{app:catalog}/plugin/license/{engine}/check-key", "methods" : "GET" },
+      { "path": "/api/{app:catalog}/plugin/{plugin}/static/.*", "methods" : "GET" },
+      { "path": "/api/{app:catalog}/plugin/{plugin}/{engine}/.*", "methods" : "*", "authorizer" : "org.camunda.bpm.webapp.impl.security.filter.EngineRequestAuthorizer" }
     ]
   }
 }

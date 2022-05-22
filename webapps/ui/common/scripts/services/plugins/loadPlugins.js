@@ -19,6 +19,8 @@ const baseImportPath = document.querySelector('base').href + '../';
 const camundaPlugins = [
   'admin-plugin-adminPlugins',
   'admin-plugin-adminEE',
+  'camunda-plugin-camundaPlugins',
+  'camunda-plugin-camundaEE',
   'cockpit-plugin-cockpitPlugins',
   'cockpit-plugin-cockpitEE',
   'tasklist-plugin-tasklistPlugins'

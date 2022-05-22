@@ -18,6 +18,11 @@
     <listener-class>org.camunda.bpm.admin.impl.web.bootstrap.AdminContainerBootstrap</listener-class>
   </listener>
 
+  <!-- admin bootstrap listener -->
+  <listener>
+    <listener-class>org.camunda.bpm.catalog.impl.web.bootstrap.CatalogContainerBootstrap</listener-class>
+  </listener>
+
   <!-- tasklist bootstrap listener -->
   <listener>
     <listener-class>org.camunda.bpm.tasklist.impl.web.bootstrap.TasklistContainerBootstrap</listener-class>
@@ -173,6 +178,26 @@
     <servlet-name>Admin Api</servlet-name>
     <url-pattern>/api/admin/*</url-pattern>
   </servlet-mapping>
+
+
+  <!-- admin rest api -->
+  <servlet>
+    <servlet-name>Catalog Api</servlet-name>
+    <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>org.camunda.bpm.catalog.impl.web.CatalogApplication</param-value>
+    </init-param>
+    <init-param>
+      <param-name>resteasy.servlet.mapping.prefix</param-name>
+      <param-value>/api/catalog</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Catalog Api</servlet-name>
+    <url-pattern>/api/catalog/*</url-pattern>
+  </servlet-mapping>
+
 
   <!-- tasklist rest api -->
   <servlet>

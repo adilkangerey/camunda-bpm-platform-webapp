@@ -30,6 +30,7 @@ module.exports = function(params, CSRFCookieName = 'XSRF-TOKEN', appName) {
   return {
     api: {
       adminApi: base.getAttribute('admin-api').slice(0, -1),
+      catalogApi: base.getAttribute('catalog-api').slice(0, -1),
       baseApi: base.getAttribute('engine-api').slice(0, -1),
       cockpitApi: base.getAttribute('cockpit-api').slice(0, -1),
       tasklistApi: base.getAttribute('tasklist-api').slice(0, -1),

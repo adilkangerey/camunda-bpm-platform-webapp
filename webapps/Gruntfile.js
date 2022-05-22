@@ -38,6 +38,7 @@ module.exports = function(grunt) {
 
   require('./ui/welcome/grunt/config/browserify')(config, browserifyConf);
   require('./ui/admin/grunt/config/browserify')(config, browserifyConf);
+  require('./ui/catalog/grunt/config/browserify')(config, browserifyConf);
   require('./ui/tasklist/grunt/config/browserify')(config, browserifyConf);
   require('./ui/cockpit/grunt/config/browserify')(config, browserifyConf);
   require('./camunda-bpm-sdk-js/grunt/config/browserify')(
@@ -48,6 +49,7 @@ module.exports = function(grunt) {
   var copyConf = require('./grunt/config/copy');
   require('./ui/welcome/grunt/config/copy')(config, copyConf);
   require('./ui/admin/grunt/config/copy')(config, copyConf);
+  require('./ui/catalog/grunt/config/copy')(config, copyConf);
   require('./ui/cockpit/grunt/config/copy')(config, copyConf);
   require('./ui/tasklist/grunt/config/copy')(config, copyConf);
   require('./camunda-bpm-sdk-js/grunt/config/copy')(config, copyConf);
@@ -68,6 +70,18 @@ module.exports = function(grunt) {
     appName: 'admin',
     sourceDir: pkg.gruntConfig.pluginSourceDir + '/admin/plugins',
     buildTarget: pkg.gruntConfig.pluginBuildTarget + '/admin/app',
+    plugin: true
+  });
+
+  require('./grunt/config/less')(config, lessConf, {
+    appName: 'catalog',
+    sourceDir: pkg.gruntConfig.catalogSourceDir,
+    buildTarget: pkg.gruntConfig.catalogBuildTarget
+  });
+  require('./grunt/config/less')(config, lessConf, {
+    appName: 'catalog',
+    sourceDir: pkg.gruntConfig.pluginSourceDir + '/catalog/plugins',
+    buildTarget: pkg.gruntConfig.pluginBuildTarget + '/catalog/app',
     plugin: true
   });
 
@@ -121,6 +135,12 @@ module.exports = function(grunt) {
   });
 
   require('./grunt/config/localescompile')(config, localesConf, {
+    appName: 'catalog',
+    sourceDir: pkg.gruntConfig.catalogSourceDir,
+    buildTarget: pkg.gruntConfig.catalogBuildTarget
+  });
+
+  require('./grunt/config/localescompile')(config, localesConf, {
     appName: 'cockpit',
     sourceDir: pkg.gruntConfig.cockpitSourceDir,
     buildTarget: pkg.gruntConfig.cockpitBuildTarget
@@ -142,12 +162,14 @@ module.exports = function(grunt) {
   require('./ui/tasklist/grunt/config/watch')(config, watchConf);
   require('./ui/cockpit/grunt/config/watch')(config, watchConf);
   require('./ui/admin/grunt/config/watch')(config, watchConf);
+  require('./ui/catalog/grunt/config/watch')(config, watchConf);
   require('./ui/common/grunt/config/watch')(config, watchConf);
 
   var uglifyConf = {};
   require('./grunt/config/uglify')(config, uglifyConf);
   require('./ui/welcome/grunt/config/uglify')(config, uglifyConf);
   require('./ui/admin/grunt/config/uglify')(config, uglifyConf);
+  require('./ui/catalog/grunt/config/uglify')(config, uglifyConf);
   require('./ui/tasklist/grunt/config/uglify')(config, uglifyConf);
   require('./ui/cockpit/grunt/config/uglify')(config, uglifyConf);
   require('./camunda-bpm-sdk-js/grunt/config/uglify')(config, uglifyConf);
@@ -155,6 +177,7 @@ module.exports = function(grunt) {
   var eslintConf = {};
   require('./ui/welcome/grunt/config/eslint')(config, eslintConf);
   require('./ui/admin/grunt/config/eslint')(config, eslintConf);
+  require('./ui/catalog/grunt/config/eslint')(config, eslintConf);
   require('./ui/tasklist/grunt/config/eslint')(config, eslintConf);
   require('./ui/cockpit/grunt/config/eslint')(config, eslintConf);
   require('./ui/common/grunt/config/eslint')(config, eslintConf);
@@ -163,6 +186,7 @@ module.exports = function(grunt) {
   var stylelintConf = {};
   require('./ui/welcome/grunt/config/stylelint')(config, stylelintConf);
   require('./ui/admin/grunt/config/stylelint')(config, stylelintConf);
+  require('./ui/catalog/grunt/config/stylelint')(config, stylelintConf);
   require('./ui/tasklist/grunt/config/stylelint')(config, stylelintConf);
   require('./ui/common/grunt/config/stylelint')(config, stylelintConf);
   require('./camunda-commons-ui/grunt/config/stylelint')(config, stylelintConf);
@@ -288,6 +312,7 @@ module.exports = function(grunt) {
       typeof app === 'undefined' ||
       app === 'tasklist' ||
       app === 'cockpit' ||
+      app === 'catalog' ||
       app === 'admin'
     ) {
       tasksToRun.push('localescompile');
