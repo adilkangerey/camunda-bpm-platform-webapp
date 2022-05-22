@@ -29,7 +29,7 @@ public class Catalog {
    * initialized by bootstrapping camunda admin with an specific
    * instance
    */
-  protected static CatalogRuntimeDelegate ADMIN_RUNTIME_DELEGATE;
+  protected static CatalogRuntimeDelegate CATALOG_RUNTIME_DELEGATE;
 
   /**
    * Returns an instance of {@link CatalogRuntimeDelegate}
@@ -37,15 +37,15 @@ public class Catalog {
    * @return
    */
   public static CatalogRuntimeDelegate getRuntimeDelegate() {
-    return ADMIN_RUNTIME_DELEGATE;
+    return CATALOG_RUNTIME_DELEGATE;
   }
 
   /**
    * A setter to set the {@link CatalogRuntimeDelegate}.
    * @param catalogRuntimeDelegate
    */
-  public static void setAdminRuntimeDelegate(CatalogRuntimeDelegate catalogRuntimeDelegate) {
-    ADMIN_RUNTIME_DELEGATE = catalogRuntimeDelegate;
+  public static void setCatalogRuntimeDelegate(CatalogRuntimeDelegate catalogRuntimeDelegate) {
+    CATALOG_RUNTIME_DELEGATE = catalogRuntimeDelegate;
   }
 
 }

@@ -55,11 +55,11 @@ public class CatalogContainerBootstrap implements ServletContextListener {
   protected static class CatalogEnvironment {
 
     public void tearDown() {
-      Catalog.setAdminRuntimeDelegate(null);
+      Catalog.setCatalogRuntimeDelegate(null);
     }
 
     public void setup() {
-      Catalog.setAdminRuntimeDelegate(new DefaultCatalogRuntimeDelegate());
+      Catalog.setCatalogRuntimeDelegate(new DefaultCatalogRuntimeDelegate());
     }
 
     protected RuntimeContainerDelegate getContainerRuntimeDelegate() {
